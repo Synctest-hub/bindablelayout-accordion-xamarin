@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AccordionXamarin"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Accordion;assembly=Syncfusion.Expander.XForms"
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             x:Class="AccordionXamarin.MainPage">
+
+    <ContentPage.BindingContext>
+        <local:ViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout>
+            <syncfusion:SfAccordion x:Name="Accordion" BindableLayout.ItemsSource="{Binding Contacts}" ExpandMode="SingleOrNone" >
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <syncfusion:AccordionItem  >
+                            <syncfusion:AccordionItem.Header >
+                                <Grid HeightRequest="60">
+                                    <Label Text="{Binding Type}" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                                </Grid>
+                            </syncfusion:AccordionItem.Header>
+                            <syncfusion:AccordionItem.Content>
+                                <Grid x:Name="mainGrid" Padding="4" HeightRequest="135" >
+                                    <sflistview:SfListView AllowGroupExpandCollapse="True" IsScrollingEnabled="False" x:Name="listView" IsScrollBarVisible="False" AutoFitMode="DynamicHeight"
+                                    ItemSpacing="3" ItemsSource="{Binding Contacts}" >
+                                        <sflistview:SfListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Grid HeightRequest="60" >
+                                                    <Label Text="{Binding ContactName}"/>
+                                                    <Grid.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding Path=BindingContext.TapCommand, Source={x:Reference Accordion}}" CommandParameter="{Binding .}" />
+                                                    </Grid.GestureRecognizers>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </sflistview:SfListView.ItemTemplate>
+                                    </sflistview:SfListView>
+                                </Grid>
+                            </syncfusion:AccordionItem.Content>
+                        </syncfusion:AccordionItem>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </syncfusion:SfAccordion>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
